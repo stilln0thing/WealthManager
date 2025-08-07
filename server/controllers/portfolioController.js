@@ -2,6 +2,17 @@
 const parseExcelFile = require("../utils/excelParser");
 const portfolioData = parseExcelFile();
 
+/**
+ * Route: GET /api/portfolio/holdings
+ * Logic:
+ * 1. Retrieve 'Holdings' sheet data from parsed Excel.
+ * 2. For each stock:
+ *    - Calculate current value = Quantity * Current Price.
+ *    - Determine gainLoss = value - (Quantity * Avg Price).
+ *    - Compute gainLossPercent = (gainLoss / (Quantity * Avg Price)) * 100.
+ * 3. Return enriched array of holdings with symbol, name, quantity, avgPrice,
+ *    currentPrice, sector, marketCap, value, gainLoss, and gainLossPercent.
+ */
 exports.getHoldings = (req, res) => {
   try {
     const holdings = portfolioData["Holdings"];
@@ -29,6 +40,18 @@ exports.getHoldings = (req, res) => {
   }
 };
 
+/**
+ * Route: GET /api/portfolio/allocation
+ * Logic:
+ * 1. Retrieve 'Holdings' sheet data.
+ * 2. Initialize accumulators: bySector{}, byMarketCap{}, totalValue = 0.
+ * 3. For each stock:
+ *    - Compute value = Quantity * Current Price.
+ *    - Add to totalValue.
+ *    - Sum sector and marketCap totals.
+ * 4. Format each category to include value and percentage of totalValue.
+ * 5. Return { bySector: {...}, byMarketCap: {...} }.
+ */
 exports.getAllocation = (req, res) => {
   try {
     const holdings = portfolioData["Holdings"];
@@ -61,6 +84,15 @@ exports.getAllocation = (req, res) => {
   }
 };
 
+/**
+ * Route: GET /api/portfolio/performance
+ * Logic:
+ * 1. Retrieve 'Historical_Performance' sheet data.
+ * 2. Map each row to timeline entries with fields:
+ *    - date (YYYY-MM-DD), portfolio, nifty50, gold.
+ * 3. Extract returns metrics from first row of 'Summary' sheet.
+ * 4. Return { timeline: [...], returns: {...} }.
+ */
 exports.getPerformance = (req, res) => {
   try {
     const data = portfolioData["Historical_Performance"];
@@ -78,6 +110,20 @@ exports.getPerformance = (req, res) => {
   }
 };
 
+/**
+ * Route: GET /api/portfolio/summary
+ * Logic:
+ * 1. Retrieve 'Holdings' and first row of 'Summary' sheet.
+ * 2. For each stock:
+ *    - Compute value = Quantity * Current Price.
+ *    - Compute invested = Quantity * Avg Price.
+ *    - Compute gain = value - invested and gainPercent.
+ * 3. Sum totalValue and totalInvested across all stocks.
+ * 4. Calculate totalGainLoss and totalGainLossPercent.
+ * 5. Identify topPerformers and worstPerformers by gainPercent.
+ * 6. Include diversificationScore and riskLevel from Summary sheet.
+ * 7. Return comprehensive summary object.
+ */
 exports.getSummary = (req, res) => {
   try {
     const holdings = portfolioData["Holdings"];

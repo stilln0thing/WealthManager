@@ -104,7 +104,14 @@ exports.getPerformance = (req, res) => {
       gold: row["Gold (₹/10g)"],
     }));
 
-    res.json( timeline);
+    // Mock returns data since it's not in the Excel file
+    const returns = {
+      portfolio: { "1month": 5.2, "3months": 12.8, "1year": 18.5 },
+      nifty50: { "1month": 3.1, "3months": 8.9, "1year": 15.2 },
+      gold: { "1month": 2.3, "3months": 6.7, "1year": 9.8 }
+    };
+
+    res.json({ timeline, returns });
   } catch {
     res.status(500).json({ error: "Failed to fetch performance" });
   }

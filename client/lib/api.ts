@@ -27,6 +27,11 @@ export interface PerformanceData {
     nifty50: number;
     gold: number;
   }>;
+  returns: {
+    portfolio: { "1month": number; "3months": number; "1year": number };
+    nifty50: { "1month": number; "3months": number; "1year": number };
+    gold: { "1month": number; "3months": number; "1year": number };
+  };
 }
 
 export interface PortfolioSummary {

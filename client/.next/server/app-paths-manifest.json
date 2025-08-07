@@ -1,0 +1,7 @@
+{
+  "/api/portfolio/allocation/route": "app/api/portfolio/allocation/route.js",
+  "/api/portfolio/performance/route": "app/api/portfolio/performance/route.js",
+  "/page": "app/page.js",
+  "/api/portfolio/holdings/route": "app/api/portfolio/holdings/route.js",
+  "/api/portfolio/summary/route": "app/api/portfolio/summary/route.js"
+}

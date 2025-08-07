@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:3000/api/:path*',
-      },
-    ];
+  output: 'standalone',
+  experimental: {
+    outputFileTracingRoot: undefined,
   },
+  // Remove the proxy configuration for Vercel deployment
+  // Vercel will handle the routing through vercel.json
 };
 
 export default nextConfig;

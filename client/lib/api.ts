@@ -1,5 +1,5 @@
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'http://localhost:3000' 
+  ? '' // Use relative URLs in production (Vercel)
   : 'http://localhost:3000';
 
 export interface Holding {

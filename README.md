@@ -88,4 +88,14 @@ The Excel file should contain the following sheets:
 - `npm run dev:server` - Start only the backend server
 - `npm run dev:client` - Start only the frontend client
 - `npm run build` - Build the frontend for production
-- `npm run start` - Start the production server 
+- `npm run start` - Start the production server
+
+## Deployment
+
+To deploy this application to Vercel:
+
+1. **Push your code to GitHub**
+2. **Connect to Vercel**: Go to [vercel.com](https://vercel.com) and import your repository
+3. **Deploy**: Vercel will automatically detect and deploy your application
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md). 

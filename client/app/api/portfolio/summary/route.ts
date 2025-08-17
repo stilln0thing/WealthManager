@@ -1,28 +1,28 @@
 import { NextResponse } from 'next/server'
 
+const API_BASE =  "http://localhost:3000/api/portfolio" 
+
+
 export async function GET() {
   try {
-    const summary = {
-      totalValue: 1372177,
-      totalInvested: 1200000,
-      totalGainLoss: 172177,
-      totalGainLossPercent: 14.35,
-      topPerformer: {
-        symbol: "TCS",
-        name: "Tata Consultancy Services",
-        gainPercent: 20.3
-      },
-      worstPerformer: {
-        symbol: "BAJFINANCE",
-        name: "Bajaj Finance Limited",
-        gainPercent: -4.9
-      },
-      diversificationScore: 7.8,
-      riskLevel: "Moderate"
+    const res = await fetch(`${API_BASE}/summary`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store" // ensures fresh data on each call
+    })
+
+    if (!res.ok) {
+      throw new Error(`Backend error: ${res.status}`)
     }
 
-    return NextResponse.json(summary)
+    const data = await res.json()
+    return NextResponse.json(data)
+
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch summary' }, { status: 500 })
+    console.error("Error fetching allocation:", error)
+    return NextResponse.json(
+      { error: 'Failed to fetch allocation' },
+      { status: 500 }
+    )
   }
 }
